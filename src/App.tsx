@@ -1,6 +1,7 @@
 import { useState, useEffect } from 'react'
 import './index.css'
 import { ParticleCanvas, FadeIn } from './utils'
+import icon from '../public/icon.jpg'
 import {
   Cloud, FileText, ArrowUpRight, GitBranch, BookOpen,
   Sun, Moon,
@@ -81,6 +82,9 @@ function Nav({ theme, toggle }: { theme: string; toggle: () => void }) {
   return (
     <nav className="nav-wrapper" aria-label="Main navigation">
       <div className="nav-pill">
+        <a href="#home" className="logo-link" style={{ display: 'flex', alignItems: 'center', marginRight: 16 }}>
+          <img src={icon} alt="Logo" style={{ height: 32, width: 32, borderRadius: 8, objectFit: 'cover', boxShadow: '0 2px 8px #0004' }} />
+        </a>
         <div className="nav-links">
           {NAV_LINKS.map(l => (
             <a
