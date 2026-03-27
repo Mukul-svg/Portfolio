@@ -1,7 +1,7 @@
 import { useState, useEffect } from 'react'
 import './index.css'
 import { ParticleCanvas, FadeIn } from './utils'
-import icon from '../public/icon.jpg'
+import icon from '../public/icon.png'
 import {
   Cloud, FileText, ArrowUpRight, GitBranch, BookOpen,
   Sun, Moon,
