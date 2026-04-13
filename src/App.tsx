@@ -4,7 +4,7 @@ import { ParticleCanvas, FadeIn } from './utils'
 import icon from '../public/icon.png'
 import {
   Cloud, FileText, ArrowUpRight, GitBranch, BookOpen,
-  Sun, Moon,
+  Sun, Moon, Webhook,
 } from 'lucide-react'
 
 // ── Data ───────────────────────────────────────────────────────
@@ -15,6 +15,13 @@ const PROJECTS = [
     desc: 'Cloud-agnostic PaaS built with Pulumi to provision isolated Kubernetes clusters across AWS, Azure & OCI. Features automated AI model deployments and usage-based cost tracking.',
     tags: ['Go', 'Kubernetes', 'Pulumi', 'AWS', 'Azure', 'OCI'],
     link: 'https://github.com/Mukul-svg/tark',
+  },
+  {
+    Icon: Webhook,
+    name: 'notchd',
+    desc: 'Zero-dependency webhook buffer in a single Go binary. Receives webhooks, persists them to embedded SQLite, and delivers to your app with automatic retries, exponential backoff, and a dead-letter queue — no Redis, no Postgres, no queue worker.',
+    tags: ['Go', 'SQLite', 'TUI', 'Webhooks', 'Reliability'],
+    link: 'https://github.com/Mukul-svg/notchd',
   },
 ]
 
