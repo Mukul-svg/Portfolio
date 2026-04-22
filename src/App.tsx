@@ -1,7 +1,6 @@
 import { useState, useEffect } from 'react'
 import './index.css'
 import { ParticleCanvas, FadeIn } from './utils'
-import icon from '../public/icon.png'
 import {
   Cloud, FileText, ArrowUpRight, GitBranch, BookOpen,
   Sun, Moon, Webhook,
@@ -68,6 +67,8 @@ const NAV_LINKS = [
   { label: 'Contact', href: '#contact' },
 ]
 
+const RESUME_URL = new URL('./assets/ai_resume.pdf', import.meta.url).href
+
 // ── Nav ────────────────────────────────────────────────────────
 function Nav({ theme, toggle }: { theme: string; toggle: () => void }) {
   const [active, setActive] = useState('#home')
@@ -90,7 +91,7 @@ function Nav({ theme, toggle }: { theme: string; toggle: () => void }) {
     <nav className="nav-wrapper" aria-label="Main navigation">
       <div className="nav-pill">
         <a href="#home" className="logo-link" style={{ display: 'flex', alignItems: 'center', marginRight: 16 }}>
-          <img src={icon} alt="Logo" style={{ height: 32, width: 32, borderRadius: 8, objectFit: 'cover', boxShadow: '0 2px 8px #0004' }} />
+          <img src="/icon.jpg" alt="Logo" style={{ height: 32, width: 32, borderRadius: 8, objectFit: 'cover', boxShadow: '0 2px 8px #0004' }} />
         </a>
         <div className="nav-links">
           {NAV_LINKS.map(l => (
@@ -118,7 +119,7 @@ function Nav({ theme, toggle }: { theme: string; toggle: () => void }) {
 }
 
 // ── Hero ───────────────────────────────────────────────────────
-function Hero() {
+function Hero({ onOpenResume }: { onOpenResume: () => void }) {
   return (
     <section id="home" className="hero">
       <div className="container">
@@ -139,9 +140,65 @@ function Hero() {
         <div className="hero-cta fade-up delay-4">
           <a href="#projects" className="btn btn-primary">View Projects →</a>
           <a href="#contact" className="btn btn-outline">Get in Touch</a>
+          <button type="button" className="btn btn-outline" onClick={onOpenResume}>Resume</button>
         </div>
       </div>
     </section>
+  )
+}
+
+function ResumeModal({
+  isOpen,
+  onClose,
+}: {
+  isOpen: boolean
+  onClose: () => void
+}) {
+  useEffect(() => {
+    if (!isOpen) return
+
+    const handleEscape = (event: KeyboardEvent) => {
+      if (event.key === 'Escape') onClose()
+    }
+
+    const previousOverflow = document.body.style.overflow
+    document.body.style.overflow = 'hidden'
+    window.addEventListener('keydown', handleEscape)
+
+    return () => {
+      document.body.style.overflow = previousOverflow
+      window.removeEventListener('keydown', handleEscape)
+    }
+  }, [isOpen, onClose])
+
+  if (!isOpen) return null
+
+  return (
+    <div className="resume-modal-overlay" role="presentation" onClick={onClose}>
+      <div
+        className="resume-modal"
+        role="dialog"
+        aria-modal="true"
+        aria-labelledby="resume-modal-title"
+        onClick={event => event.stopPropagation()}
+      >
+        <div className="resume-modal-head">
+          <h3 id="resume-modal-title">Resume</h3>
+          <button type="button" className="resume-close" onClick={onClose} aria-label="Close resume preview">
+            Close
+          </button>
+        </div>
+
+        <div className="resume-modal-viewer">
+          <iframe src={RESUME_URL} title="AI Resume" className="resume-frame" />
+        </div>
+
+        <div className="resume-modal-actions">
+          <a href={RESUME_URL} target="_blank" rel="noreferrer" className="btn btn-primary">Open Fullscreen</a>
+          <a href={RESUME_URL} download className="btn btn-outline">Download PDF</a>
+        </div>
+      </div>
+    </div>
   )
 }
 
@@ -367,6 +424,7 @@ function Contact() {
 // ── App ────────────────────────────────────────────────────────
 export default function App() {
   const [theme, setTheme] = useState<'light' | 'dark'>('dark')
+  const [isResumeOpen, setIsResumeOpen] = useState(false)
 
   useEffect(() => { document.documentElement.setAttribute('data-theme', theme) }, [theme])
 
@@ -377,13 +435,14 @@ export default function App() {
       <ParticleCanvas />
       <Nav theme={theme} toggle={toggle} />
       <main>
-        <Hero />
+        <Hero onOpenResume={() => setIsResumeOpen(true)} />
         <About />
         <Projects />
         <PaperImplementations />
         <Skills />
         <Contact />
       </main>
+      <ResumeModal isOpen={isResumeOpen} onClose={() => setIsResumeOpen(false)} />
     </div>
   )
 }
