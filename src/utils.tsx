@@ -1,4 +1,4 @@
-import { useEffect, useRef, useState } from 'react'
+import { useEffect, useRef } from 'react'
 
 // ── Particle canvas for dark mode ──────────────────────────────
 export function ParticleCanvas() {
@@ -47,18 +47,6 @@ export function ParticleCanvas() {
   }, [])
 
   return <canvas id="particle-canvas" ref={canvasRef} />
-}
-
-// ── Clock hook ─────────────────────────────────────────────────
-export function useClock() {
-  const [time, setTime] = useState('')
-  useEffect(() => {
-    const fmt = () => new Date().toLocaleTimeString('en-IN', { hour: '2-digit', minute: '2-digit', timeZone: 'Asia/Kolkata' })
-    setTime(fmt())
-    const id = setInterval(() => setTime(fmt()), 1000)
-    return () => clearInterval(id)
-  }, [])
-  return time
 }
 
 // ── Intersection observer fade-up ─────────────────────────────

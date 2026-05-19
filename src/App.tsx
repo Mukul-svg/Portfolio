@@ -3,7 +3,7 @@ import './index.css'
 import { ParticleCanvas, FadeIn } from './utils'
 import {
   Cloud, FileText, ArrowUpRight, GitBranch, BookOpen,
-  Sun, Moon, Webhook,
+  Sun, Moon, Webhook, Ship,
 } from 'lucide-react'
 
 // ── Data ───────────────────────────────────────────────────────
@@ -25,6 +25,16 @@ const PROJECTS = [
 ]
 
 const PAPERS = [
+  {
+    Icon: Ship,
+    name: 'ship',
+    paper: 'In Search of an Understandable Consensus Algorithm',
+    authors: 'Diego Ongaro & John Ousterhout, Stanford (2014)',
+    desc: 'A Go implementation of the Raft consensus algorithm. Supports leader election with randomized timeouts, log replication, safety guarantees, dynamic membership changes, and log compaction (snapshotting) to maintain a consistent replicated state machine.',
+    tags: ['Go', 'Distributed Systems', 'Consensus', 'Raft', 'Concurrency'],
+    link: 'https://github.com/Mukul-svg/ship',
+    paperLink: 'https://raft.github.io/raft.pdf',
+  },
   {
     Icon: GitBranch,
     name: 'mapr-go',
